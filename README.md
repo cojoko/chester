@@ -1,18 +1,18 @@
-# chester README
+# chester
 
-A simple extension to signal your turn in any active Lichess game.
+a simple extension to signal your turn in any active Lichess game.
 Adds a little pawn icon to the status bar at the bottom of the screen.
 
 When it is your turn to play, the pawn will light up green and link you to
 the active game.
 
-![feature X](./images/little.png)
+![green pawn](https://raw.githubusercontent.com/Colin-Kohli/chester/master/images/little.png)
 
 This extension is ideal for slower or untimed forms of play. I play a lot of
 correspondence chess while I code, and clicking into the browser tab to see
 I had a turn to take was interrupting my workflow.
 
-To those wondering, yes, it's *definitely* a pawn icon, no need to look at the source.
+To those wondering, yes, it's *definitely* a pawn icon, why do you ask? No need to look at the source.
 
 If the source code for this extension *does* interest you, it's available on
 my github *here*.

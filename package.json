@@ -1,9 +1,10 @@
 {
   "name": "chester",
   "displayName": "chester",
-  "description": "A tool to signal your turn in lichess games",
+  "description": "Keep track of your slow Lichess games",
+  "icon": "images/chester.png",
   "publisher": "cojoko",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "engines": {
     "vscode": "^1.61.0"
   },
@@ -25,19 +26,18 @@
     "configuration": {
       "title": "chester",
       "properties": {
-
         "chester.username":{
-          "type": "String",
+          "type": "string",
           "default": "",
           "description": "Your public Lichess username"
         },
         "chester.monochrome":{
           "type": "boolean",
           "default": false,
-          "markdownDescription": "Controls if turn status is represented by icon shape $(record) => $(play-circle) or color (off)"
+          "description": "Controls if turn status is represented by icon shape (on) or color (off)"
         },
         "chester.refreshTimer":{
-          "type": "Number",
+          "type": "number",
           "default": 15000,
           "description": "How often the extension fetches game status, in ms. Default is 15 seconds.",
           "minimum": 1000
@@ -70,5 +70,9 @@
   "dependencies": {
     "axios": "^0.24.0",
     "pgn-parser": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Colin-Kohli"
   }
 }
