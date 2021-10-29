@@ -20,6 +20,7 @@
         "command": "chester.refresh",
         "title": "Refresh"
       }
+  
     ]
   },
   "scripts": {

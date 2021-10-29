@@ -1,7 +1,8 @@
-const axios = require('axios')
-const parser = require('pgn-parser')
+const axios = require('axios');
+const parser = require('pgn-parser');
 
-const PLAYER_NAME = "cojoko"
+const PLAYER_NAME = "cojoko";
+var HOT_LINK = "";
 
 
 import { stat } from 'fs';
@@ -16,40 +17,59 @@ let statusBarItem: vscode.StatusBarItem;
 export async function activate(context: vscode.ExtensionContext) {
 	
 	statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-	set_status("wait", statusBarItem)
-	context.subscriptions.push(statusBarItem)
+	setStatus("wait", statusBarItem);
+	context.subscriptions.push(statusBarItem);
 
-	let disposable = vscode.commands.registerCommand('chester.refresh', async () => {
-		await is_your_turn();
+	let refresh = vscode.commands.registerCommand('chester.refresh', async () => {
+		await isYourTurn();
 		vscode.window.showInformationMessage('Games updated.');
 	});
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(refresh);
 
-	is_your_turn();
+	let fuzzyInfo = vscode.commands.registerCommand('chester.fuzzy_info', async () => {
+		vscode.window.showInformationMessage( `
+		Your only active games have < 4 turns played. 
+		See [here](https://lichess.org/api#operation/apiGamesUser) for more details.
+		`);
+		isYourTurn();
+	});
+	context.subscriptions.push(fuzzyInfo);
+
+	let openLink = vscode.commands.registerCommand('chester.open_link', async () => {
+		console.log(HOT_LINK);
+		let success = await vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(HOT_LINK));
+		isYourTurn();
+	});
+	context.subscriptions.push(openLink);
+
+	setInterval(isYourTurn, 15000);
 }
 
-async function is_your_turn() {
-	const active_games = await get_games();
-	if (!active_games){
-		set_status("wait", statusBarItem);
+async function isYourTurn() {
+
+	console.log("Updating...");
+	const activeGames = await getGames();
+	if (!activeGames){
+		setStatus("wait", statusBarItem);
 		return;
 	}
 	
 	let fuzzy = false;
-	for (var ii = 0; ii < active_games.length; ii++){
-		
-		let game = active_games[ii]
-		let moves = game["moves"]
-		let player_color = ""
+	for (var ii = 0; ii < activeGames.length; ii++){
+		console.log("Game " + ii.toString() + ":");
+		let game = activeGames[ii];
+		let moves = game["moves"];
+		let link = game["headers"]["1"]["value"];
+		let playerColor = "";
 		
 		for (var jj = 0; jj < game.headers.length; jj++){
 			if (game.headers[jj]["value"] === PLAYER_NAME){
-				player_color = game.headers[jj]["name"]
-				// console.log(player_color)
+				playerColor = game.headers[jj]["name"];
+
 			}
 		}
-		let turn_color = "";
-		console.log(moves.length)
+		let turnColor = "";
+		console.log(moves.length);
 		if (moves.length < 6){
 			
 			// Games after 5 moves have 3 moves subtracted, so count stalls at 5
@@ -58,76 +78,78 @@ async function is_your_turn() {
 			fuzzy = true;
 		}
 
-		let turn = moves.length % 2 // 1 is black, 0 is white (swapped from fuzzing)
+		let turn = moves.length % 2;
 		if (turn){
-			turn_color = "White"
+			turnColor = "White";
 		} else {
-			turn_color = "Black"
+			turnColor = "Black";
 		}
 
-		console.log(turn_color)
-		console.log(player_color)
-		if (turn_color === player_color){
-			set_status("play", statusBarItem);
+		console.log(turnColor);
+		console.log(playerColor);
+		if (turnColor === playerColor){
+			setStatus("play", statusBarItem);
+			HOT_LINK = link;
 			return;
 		}
-
 	}
 
 	if (fuzzy){
-		set_status("fuzzy", statusBarItem);
+		setStatus("fuzzy", statusBarItem);
 	} else {
-		set_status("wait", statusBarItem);
+		setStatus("wait", statusBarItem);
 	}
-
 }
 
-async function get_games() {
+async function getGames() {
 	const res = await axios.get("https://lichess.org/api/games/user/cojoko?ongoing=true");
-	const status = res.status
-	const pgn = res["data"]
+	const status = res.status;
+	const pgn = res["data"];
 	const result = parser.parse(pgn);
 
-	var active_games = [];
+	var activeGames = [];
 	for (var ii = 0; ii < result.length; ii++){
 
 		let headers = result[ii]["headers"];
 		for (var jj = 0; jj < headers.length; jj++){
 			let item = headers[jj];
 			if (item["value"] === "Unterminated"){
-				active_games.push(result[ii])
+				activeGames.push(result[ii]);
 			}
 		}
 	}
-	console.log(active_games)
-	return active_games
+	console.log(activeGames);
+	return activeGames;
 
 }
 
-function set_status(status: String, display: vscode.StatusBarItem){
+function setStatus(status: String, display: vscode.StatusBarItem){
 
-	console.log("Status set: " + status)
+	console.log("Status set: " + status);
 
 	// TODO: Add an optional label
 	if (status === "wait"){
 		display.text = `$(gist-private)`;
-		display.command = "chester.refresh"
+		//display.text = `♔$(record~spin)♕`;
+		display.color = new vscode.ThemeColor("statusBar.foreground");
+		console.log(display.color);
+		display.command = "chester.refresh";
 		display.show();
 	}
 
 	if (status === "play"){
-		display.text = `$(play-circle~spin)`;
-		display.command = "chester.refresh"
+		display.text = `$(gist-private)`;	
+		//display.text = `♔$(play-circle~spin)♕`;
+		display.color = "#a0e7a0";
+		display.command = `chester.open_link`;
 		display.show();
 	}
 
 	if (status === "fuzzy"){
 		display.text = `$(question~spin)`;
-		display.command = "chester.refresh"
+		display.command = "chester.fuzzy_info";
 		display.show();
 	}
-
 }
-
 
 export function deactivate() {}
