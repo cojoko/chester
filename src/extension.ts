@@ -1,23 +1,18 @@
 const axios = require('axios');
 const parser = require('pgn-parser');
 
-const PLAYER_NAME = "cojoko";
+const PLAYER_NAME = vscode.workspace.getConfiguration("chester").get("username");
 var HOT_LINK = "";
-
-
-import { stat } from 'fs';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
-
 let statusBarItem: vscode.StatusBarItem;
+
+import * as vscode from 'vscode';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
 	
 	statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-	setStatus("wait", statusBarItem);
+	setStatus("wait");
 	context.subscriptions.push(statusBarItem);
 
 	let refresh = vscode.commands.registerCommand('chester.refresh', async () => {
@@ -28,7 +23,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	let fuzzyInfo = vscode.commands.registerCommand('chester.fuzzy_info', async () => {
 		vscode.window.showInformationMessage( `
-		Your only active games have < 4 turns played. 
+		Your only active games have < 4 turns played. \n
 		See [here](https://lichess.org/api#operation/apiGamesUser) for more details.
 		`);
 		isYourTurn();
@@ -42,6 +37,13 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openLink);
 
+	let errorInfo = vscode.commands.registerCommand('chester.error_info', async () => {
+		vscode.window.showInformationMessage( `
+		Error fetching games for user ` + PLAYER_NAME);
+		isYourTurn();
+	});
+	context.subscriptions.push(errorInfo);
+
 	setInterval(isYourTurn, vscode.workspace.getConfiguration('chester').get("refreshTimer"));
 }
 
@@ -49,8 +51,13 @@ async function isYourTurn() {
 
 	console.log("Updating...");
 	const activeGames = await getGames();
+
+	if (activeGames === "error"){
+		setStatus("error");
+		return;
+	}
 	if (!activeGames){
-		setStatus("wait", statusBarItem);
+		setStatus("wait");
 		return;
 	}
 	
@@ -88,42 +95,52 @@ async function isYourTurn() {
 		console.log(turnColor);
 		console.log(playerColor);
 		if (turnColor === playerColor){
-			setStatus("play", statusBarItem);
+			setStatus("play");
 			HOT_LINK = link;
 			return;
 		}
 	}
 
 	if (fuzzy){
-		setStatus("fuzzy", statusBarItem);
+		setStatus("fuzzy");
 	} else {
-		setStatus("wait", statusBarItem);
+		setStatus("wait");
 	}
 }
 
 async function getGames() {
-	const res = await axios.get("https://lichess.org/api/games/user/cojoko?ongoing=true");
-	const status = res.status;
-	const pgn = res["data"];
-	const result = parser.parse(pgn);
-
-	var activeGames = [];
-	for (var ii = 0; ii < result.length; ii++){
-
-		let headers = result[ii]["headers"];
-		for (var jj = 0; jj < headers.length; jj++){
-			let item = headers[jj];
-			if (item["value"] === "Unterminated"){
-				activeGames.push(result[ii]);
+	let url = "https://lichess.org/api/games/user/"+PLAYER_NAME+"?ongoing=true";
+	
+	var res;
+	try{
+		const res = await axios.get(url);
+	
+		const pgn = res["data"];
+		const result = parser.parse(pgn);
+	
+		var activeGames = [];
+		for (var ii = 0; ii < result.length; ii++){
+	
+			let headers = result[ii]["headers"];
+			for (var jj = 0; jj < headers.length; jj++){
+				let item = headers[jj];
+				if (item["value"] === "Unterminated"){
+					activeGames.push(result[ii]);
+				}
 			}
 		}
+		console.log(activeGames);
+		return activeGames;
 	}
-	console.log(activeGames);
-	return activeGames;
+	catch(err){
+		console.log(err);
+		return("error");
+	}
+	
 
 }
 
-function setStatus(status: String, display: vscode.StatusBarItem){
+function setStatus(status: String){
 
 	console.log("Status set: " + status);
 
@@ -131,39 +148,47 @@ function setStatus(status: String, display: vscode.StatusBarItem){
 	if (status === "wait"){
 
 		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
-			display.text = `♔$(record~spin)♕`;
-		} else{display.text = `$(gist-private)`;}
+			statusBarItem.text = `♔$(record~spin)♕`;
+		} else{statusBarItem.text = `$(gist-private)`;}
 			
-		display.color = new vscode.ThemeColor("statusBar.foreground");
-		display.command = "chester.refresh";
-		display.show();
+		statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
+		statusBarItem.command = "chester.refresh";
+		statusBarItem.show();
 	}
 
 	if (status === "play"){
 
 		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
-			display.text = `♔$(play-circle~spin)♕`;
+			statusBarItem.text = `♔$(play-circle~spin)♕`;
 		}else{
-			display.text = `$(gist-private)`;	
-			display.color = "#a0e7a0";
+			statusBarItem.text = `$(gist-private)`;	
+			statusBarItem.color = "#a0e7a0";
 		}
 	
-		display.command = `chester.open_link`;
-		display.show();
+		statusBarItem.command = `chester.open_link`;
+		statusBarItem.show();
 	}
 
 	if (status === "fuzzy"){
 		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
-			display.text = `♔$(question~spin)♕`;
-			display.color = "#fdfdaf"; 
-
+			statusBarItem.text = `♔$(question~spin)♕`;
 		}else{
-			display.text = `$(gist-private)`;
+			statusBarItem.text = `$(gist-private)`;
+			statusBarItem.color = "#fdfdaf"; 
 		}
 		
-		
-		display.command = "chester.fuzzy_info";
-		display.show();
+		statusBarItem.command = "chester.fuzzy_info";
+		statusBarItem.show();
+	}
+	if (status === "error"){
+		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
+			statusBarItem.text = `♔$(issues~spin)♕`;
+		}else{
+			statusBarItem.text = `$(gist-private)`;
+			statusBarItem.color = "#ff9994"; 
+		}
+		statusBarItem.command = "chester.error_info";
+		statusBarItem.show();
 	}
 }
 
