@@ -42,7 +42,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openLink);
 
-	setInterval(isYourTurn, 15000);
+	setInterval(isYourTurn, vscode.workspace.getConfiguration('chester').get("refreshTimer"));
 }
 
 async function isYourTurn() {
@@ -129,24 +129,39 @@ function setStatus(status: String, display: vscode.StatusBarItem){
 
 	// TODO: Add an optional label
 	if (status === "wait"){
-		display.text = `$(gist-private)`;
-		//display.text = `♔$(record~spin)♕`;
+
+		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
+			display.text = `♔$(record~spin)♕`;
+		} else{display.text = `$(gist-private)`;}
+			
 		display.color = new vscode.ThemeColor("statusBar.foreground");
-		console.log(display.color);
 		display.command = "chester.refresh";
 		display.show();
 	}
 
 	if (status === "play"){
-		display.text = `$(gist-private)`;	
-		//display.text = `♔$(play-circle~spin)♕`;
-		display.color = "#a0e7a0";
+
+		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
+			display.text = `♔$(play-circle~spin)♕`;
+		}else{
+			display.text = `$(gist-private)`;	
+			display.color = "#a0e7a0";
+		}
+	
 		display.command = `chester.open_link`;
 		display.show();
 	}
 
 	if (status === "fuzzy"){
-		display.text = `$(question~spin)`;
+		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
+			display.text = `♔$(question~spin)♕`;
+			display.color = "#fdfdaf"; 
+
+		}else{
+			display.text = `$(gist-private)`;
+		}
+		
+		
 		display.command = "chester.fuzzy_info";
 		display.show();
 	}

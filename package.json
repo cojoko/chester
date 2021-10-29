@@ -20,9 +20,31 @@
         "command": "chester.refresh",
         "title": "Refresh"
       }
-  
-    ]
+    ],
+    "configuration": {
+      "title": "chester",
+      "properties": {
+
+        "chester.username":{
+          "type": "String",
+          "default": "",
+          "description": "Your public Lichess username"
+        },
+        "chester.monochrome":{
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Controls if turn status is represented by icon shape $(record) => $(play-circle) or color (off)"
+        },
+        "chester.refreshTimer":{
+          "type": "Number",
+          "default": 15000,
+          "description": "How often the extension fetches game status, in ms. Default is 15 seconds.",
+          "minimum": 1000
+        }
+      }
+    }
   },
+  
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
