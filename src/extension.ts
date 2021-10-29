@@ -1,8 +1,8 @@
 const axios = require('axios');
 const parser = require('pgn-parser');
 
-const PLAYER_NAME = vscode.workspace.getConfiguration("chester").get("username");
-var HOT_LINK = "";
+let PLAYER_NAME: any;
+var HOT_LINK = " ";
 let statusBarItem: vscode.StatusBarItem;
 
 import * as vscode from 'vscode';
@@ -44,6 +44,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(errorInfo);
 
+	PLAYER_NAME = "cojoko";
+	isYourTurn();
 	setInterval(isYourTurn, vscode.workspace.getConfiguration('chester').get("refreshTimer"));
 }
 

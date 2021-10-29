@@ -1,35 +1,52 @@
 # chester README
 
-This is the README for your extension "chester". After writing up a brief description, we recommend including the following sections.
+A simple extension to signal your turn in any active Lichess game.
+Adds a little pawn icon to the status bar at the bottom of the screen.
+
+When it is your turn to play, the pawn will light up green and link you to
+the active game.
+
+![feature X](./images/little.png)
+
+This extension is ideal for slower or untimed forms of play. I play a lot of
+correspondence chess while I code, and clicking into the browser tab to see
+I had a turn to take was interrupting my workflow.
+
+To those wondering, yes, it's *definitely* a pawn icon, no need to look at the source.
+
+If the source code for this extension *does* interest you, it's available on
+my github *here*.
+
+## Setup
+
+Just add your Lichess username in the extension settings, and configure the
+other settings how you like. Your games on Lichess must be public.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Refresh frequency
 
-For example if there is an image subfolder under your extension project workspace:
+Change the refresh timing in the extension settings. You could have chester check every hour and a half, or every other second. Time is in milliseconds.
 
-\!\[feature X\]\(images/feature-x.png\)
+### Monochrome
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+If you prefer a tidier status bar or want to minimize visual distraction, the
+monochrome option uses a separate icon set to tell you it's your turn to play.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `chester.username`: user's Lichess username
+* `chester.refreshTimer`: frequency with which chester fetches games
+* `chester.monochrome`: use icons rather than color to alert user
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+None. chester is perfect<sup> ok you're not really supposed to add custom colors
+but i havn't figured out how I want to hook into themes yet.</sup>
+
+
 
 ## Release Notes
 
@@ -37,34 +54,6 @@ Users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release of chester
 
 -----------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
