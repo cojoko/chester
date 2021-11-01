@@ -1,59 +1,59 @@
 # chester
 
-a simple extension to signal your turn in any active Lichess game.
-Adds a little pawn icon to the status bar at the bottom of the screen.
+a simple extension to signal your turn in any active lichess game.
+adds a little pawn icon to the status bar at the bottom of the screen.
 
-When it is your turn to play, the pawn will light up green and link you to
+when it is your turn to play, the pawn will light up green and link you to
 the active game.
 
-![green pawn](https://raw.githubusercontent.com/Colin-Kohli/chester/master/images/little.png)
+![green pawn](https://raw.githubusercontent.com/colin-kohli/chester/master/images/little.png)
 
-This extension is ideal for slower or untimed forms of play. I play a lot of
-correspondence chess while I code, and clicking into the browser tab to see
-I had a turn to take was interrupting my workflow.
+this extension is ideal for slower or untimed forms of play. i play a lot of
+correspondence chess while coding, and clicking into the browser tab to see
+i had a turn to take was interrupting my workflow.
 
-To those wondering, yes, it's *definitely* a pawn icon, why do you ask? No need to look at the source.
+to those wondering, yes, it's *definitely* a pawn icon, why do you ask? no need to look at the source.
 
-If the source code for this extension *does* interest you, it's available on
-my github *here*.
+if the source code for this extension *does* interest you, it's available on
+my *[github](https://github.com/cojoko/chester)*.
 
-## Setup
+## setup
 
-Just add your Lichess username in the extension settings, and configure the
-other settings how you like. Your games on Lichess must be public.
+just add your Lichess username in the extension settings, and configure the
+other settings how you like. your games on Lichess must be public.
 
-## Features
+## features
 
-### Refresh frequency
+### refresh frequency
 
-Change the refresh timing in the extension settings. You could have chester check every hour and a half, or every other second. Time is in milliseconds.
+change the refresh timing in the extension settings. you could have chester check every hour and a half, or every other second. time is in milliseconds.
 
-### Monochrome
+### monochrome
 
-If you prefer a tidier status bar or want to minimize visual distraction, the
+if you prefer a tidier status bar or want to minimize visual distraction, the
 monochrome option uses a separate icon set to tell you it's your turn to play.
 
-## Extension Settings
+## extension settings
 
-This extension contributes the following settings:
+this extension contributes the following settings:
 
 * `chester.username`: user's Lichess username
-* `chester.refreshTimer`: frequency with which chester fetches games
+* `chester.refreshtimer`: frequency with which chester fetches games
 * `chester.monochrome`: use icons rather than color to alert user
 
-## Known Issues
+## known issues
 
-None. chester is perfect<sup> ok you're not really supposed to add custom colors
-but i havn't figured out how I want to hook into themes yet.</sup>
+none. chester is perfect<sup> ok you're not really supposed to add custom colors
+but i haven't figured out how i want to hook into themes yet.</sup>
 
 
 
-## Release Notes
+## release notes
 
-Users appreciate release notes as you update your extension.
+users appreciate release notes as you update your extension.
 
 ### 1.0.0
 
-Initial release of chester
+initial release of chester
 
 -----------------------------------------------------------------------------------------------------------

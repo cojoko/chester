@@ -4,7 +4,7 @@
   "description": "Keep track of your slow Lichess games",
   "icon": "images/chester.png",
   "publisher": "cojoko",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.61.0"
   },

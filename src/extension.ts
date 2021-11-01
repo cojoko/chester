@@ -86,21 +86,22 @@ async function isYourTurn() {
 			// until move 8. AFAIK there is no way to get turn but i have submitted
 			// an issue to the repo 
 			fuzzy = true;
-		}
+		}else{
 
-		let turn = moves.length % 2;
-		if (turn){
-			turnColor = "White";
-		} else {
-			turnColor = "Black";
-		}
+			let turn = moves.length % 2;
+			if (turn){
+				turnColor = "White";
+			} else {
+				turnColor = "Black";
+			}
 
-		console.log(turnColor);
-		console.log(playerColor);
-		if (turnColor === playerColor){
-			setStatus("play");
-			HOT_LINK = link;
-			return;
+			console.log(turnColor);
+			console.log(playerColor);
+			if (turnColor === playerColor){
+				setStatus("play");
+				HOT_LINK = link;
+				return;
+			}
 		}
 	}
 
