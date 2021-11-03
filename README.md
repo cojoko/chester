@@ -1,6 +1,14 @@
 # chester
 
-a simple extension to signal your turn in any active lichess game.
+### post-"r/chess" thread update:
+
+*Thank you to everybody for your kindness and feedback in the [reddit thread](https://www.reddit.com/r/chess/comments/ql4dhw/does_anyone_else_use_both_vscode_and_lichess/) for chester's release. I certainly did not expect so many eyes on this project, let alone API direction from Lichess' founder. In response to concerns surrounding large payloads for users with extensive game histories, I have refactored the project to use a seperate endpoint which returns only active games. As this endpoint requires authorization with Lichess, you will need to provide chester a personal authentication token which you can generate [here](https://lichess.org/account/oauth/token/create?description=chester+for+vscode) and add in the extension settings. Apologies for the extra step, but your router will thank you. Thank you all again, keep the feedback coming, and expect additional support coming shortly.*
+
+\- Colin
+
+## about
+
+chester is a simple extension to signal your turn in any active lichess game.
 adds a little pawn icon to the status bar at the bottom of the screen.
 
 when it is your turn to play, the pawn will light up green and link you to
@@ -19,10 +27,6 @@ my *[github](https://github.com/cojoko/chester)*.
 
 ## setup
 
-<<<<<<< Updated upstream
-just add your Lichess username in the extension settings, and configure the
-other settings how you like. your games on Lichess must be public.
-=======
 in order for chester to see your current games, you must generate a personal
 api token and add it within the extension settings. simply make a token by
 clicking "submit" at [this link](https://lichess.org/account/oauth/token/create?description=chester+for+vscode) (no additional scope necessary), and copying the
@@ -45,7 +49,6 @@ your games.
 
 *red*: there has been an error returning games for the given user. make sure
 your token in the extension settings is correct.
->>>>>>> Stashed changes
 
 ## features
 
@@ -62,7 +65,7 @@ monochrome option uses a separate icon set to tell you it's your turn to play.
 
 this extension contributes the following settings:
 
-* `chester.username`: user's Lichess username
+* `chester.Pat`: user's personal authentication token
 * `chester.refreshtimer`: frequency with which chester fetches games
 * `chester.monochrome`: use icons rather than color to alert user
 
@@ -72,13 +75,11 @@ none. chester is perfect<sup> ok you're not really supposed to add custom colors
 but i haven't figured out how i want to hook into themes yet.</sup>
 
 
+### Pre-1.0.0
 
-## release notes
-
-users appreciate release notes as you update your extension.
-
+Using a non authenticated endpoint to return all games by username.
 ### 1.0.0
 
-initial release of chester
+Using a PAT-authenticated endpoint which returns only active games for a user.
 
 -----------------------------------------------------------------------------------------------------------
