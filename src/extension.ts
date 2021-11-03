@@ -87,7 +87,7 @@ function setStatus(status: String){
 
 		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
 			statusBarItem.text = `♔$(record~spin)♕`;
-		} else{statusBarItem.text = `$(gist-private)`;}
+		} else{statusBarItem.text = `♙`;}
 			
 		statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
 		statusBarItem.command = "chester.refresh";
@@ -100,7 +100,7 @@ function setStatus(status: String){
 			statusBarItem.text = `♔$(play-circle~spin)♕`;
 			statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
 		}else{
-			statusBarItem.text = `$(gist-private)`;	
+			statusBarItem.text = `♙`;	
 			statusBarItem.color = "#a0e7a0";
 		}
 		statusBarItem.command = `chester.open_link`;
@@ -112,7 +112,7 @@ function setStatus(status: String){
 			statusBarItem.text = `♔$(issues~spin)♕`;
 			statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
 		}else{
-			statusBarItem.text = `$(gist-private)`;
+			statusBarItem.text = `♙`;
 			statusBarItem.color = "#ff9994"; 
 		}
 		statusBarItem.command = "chester.error_info";
