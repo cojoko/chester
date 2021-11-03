@@ -4,7 +4,7 @@
   "description": "Keep track of your slow Lichess games",
   "icon": "images/chester.png",
   "publisher": "cojoko",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.61.0"
   },
@@ -26,10 +26,10 @@
     "configuration": {
       "title": "chester",
       "properties": {
-        "chester.username":{
+        "chester.pat":{
           "type": "string",
           "default": "",
-          "description": "Your public Lichess username"
+          "description": "Your personal API token. Generate one here: https://lichess.org/account/oauth/token/create?description=chester+for+vscode"
         },
         "chester.monochrome":{
           "type": "boolean",
