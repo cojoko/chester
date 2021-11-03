@@ -3,6 +3,7 @@ const axios = require('axios');
 // Link opened by clicking the icon if status is "play"
 var HOT_LINK = " ";
 let statusBarItem: vscode.StatusBarItem;
+let icon = '♖';
 
 import * as vscode from 'vscode';
 
@@ -104,7 +105,7 @@ function setStatus(status: String){
 
 		if (vscode.workspace.getConfiguration('chester').get("monochrome")){
 			statusBarItem.text = `♔$(record~spin)♕`;
-		} else{statusBarItem.text = `♖`;}
+		} else{statusBarItem.text = icon;}
 			
 		statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
 		statusBarItem.command = "chester.refresh";
@@ -117,7 +118,7 @@ function setStatus(status: String){
 			statusBarItem.text = `♔$(play-circle~spin)♕`;
 			statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
 		}else{
-			statusBarItem.text = `♖`;	
+			statusBarItem.text = icon;	
 			statusBarItem.color = "#a0e7a0";
 		}
 		statusBarItem.command = `chester.open_link`;
@@ -129,7 +130,7 @@ function setStatus(status: String){
 			statusBarItem.text = `♔$(issues~spin)♕`;
 			statusBarItem.color = new vscode.ThemeColor("statusBar.foreground");
 		}else{
-			statusBarItem.text = `$(extensions-warning-message) ♖`;
+			statusBarItem.text = `$(extensions-warning-message)` + icon;
 			statusBarItem.color = "#ff9994"; 
 		}
 		statusBarItem.command = "chester.error_info";
