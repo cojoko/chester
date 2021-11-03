@@ -14,7 +14,7 @@ adds a little pawn icon to the status bar at the bottom of the screen.
 when it is your turn to play, the pawn will light up green and link you to
 the active game.
 
-![green pawn](https://raw.githubusercontent.com/colin-kohli/chester/master/images/little.png)
+![green pawn](https://raw.githubusercontent.com/cojoko/chester/master/images/little.png)
 
 this extension is ideal for slower or untimed forms of play. i play a lot of
 correspondence chess while coding, and clicking into the browser tab to see
