@@ -19,8 +19,33 @@ my *[github](https://github.com/cojoko/chester)*.
 
 ## setup
 
+<<<<<<< Updated upstream
 just add your Lichess username in the extension settings, and configure the
 other settings how you like. your games on Lichess must be public.
+=======
+in order for chester to see your current games, you must generate a personal
+api token and add it within the extension settings. simply make a token by
+clicking "submit" at [this link](https://lichess.org/account/oauth/token/create?description=chester+for+vscode) (no additional scope necessary), and copying the
+strange string of letters an numbers produced.
+
+then, within the settings for this extension, paste the token into the box
+labeled as "Pat". extension settings can be accessed by
+clicking the cog next to the extension name within the extension sidebar.
+
+## use
+
+the color (or shape if using monochrome mode) of the icon lets you know the
+status of your active games. color meanings are as follows:
+
+*green*: it is your turn in at least one of your active games. click the icon
+to open the active game in your browser.
+
+*grey*: no active games where it is your turn. click the icon to manually refresh
+your games.
+
+*red*: there has been an error returning games for the given user. make sure
+your token in the extension settings is correct.
+>>>>>>> Stashed changes
 
 ## features
 

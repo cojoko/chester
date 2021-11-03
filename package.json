@@ -4,7 +4,11 @@
   "description": "Keep track of your slow Lichess games",
   "icon": "images/chester.png",
   "publisher": "cojoko",
+<<<<<<< Updated upstream
   "version": "0.1.0",
+=======
+  "version": "1.0.2",
+>>>>>>> Stashed changes
   "engines": {
     "vscode": "^1.61.0"
   },
