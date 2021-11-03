@@ -19,10 +19,6 @@ my *[github](https://github.com/cojoko/chester)*.
 
 ## setup
 
-<<<<<<< Updated upstream
-just add your Lichess username in the extension settings, and configure the
-other settings how you like. your games on Lichess must be public.
-=======
 in order for chester to see your current games, you must generate a personal
 api token and add it within the extension settings. simply make a token by
 clicking "submit" at [this link](https://lichess.org/account/oauth/token/create?description=chester+for+vscode) (no additional scope necessary), and copying the
@@ -45,7 +41,6 @@ your games.
 
 *red*: there has been an error returning games for the given user. make sure
 your token in the extension settings is correct.
->>>>>>> Stashed changes
 
 ## features
 
