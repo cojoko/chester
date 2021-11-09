@@ -20,17 +20,16 @@ this extension is ideal for slower or untimed forms of play. i play a lot of
 correspondence chess while coding, and clicking into the browser tab to see
 i had a turn to take was interrupting my workflow.
 
-to those wondering, yes, it's *definitely* a pawn icon, why do you ask? no need to look at the source.
-
-if the source code for this extension *does* interest you, it's available on
+if the source code for this extension interests you, it's available on
 my *[github](https://github.com/cojoko/chester)*.
 
 ## setup
 
 in order for chester to see your current games, you must generate a personal
 api token and add it within the extension settings. simply make a token by
-clicking "submit" at [this link](https://lichess.org/account/oauth/token/create?description=chester+for+vscode) (no additional scope necessary), and copying the
-strange string of letters an numbers produced.
+clicking "submit" at [this link](https://lichess.org/account/oauth/token/create?description=chester+for+vscode) 
+(no additional scope necessary), and copying the strange string of letters and 
+numbers produced.
 
 then, within the settings for this extension, paste the token into the box
 labeled as "Pat". extension settings can be accessed by
@@ -81,5 +80,9 @@ Using a non authenticated endpoint to return all games by username.
 ### 1.0.0
 
 Using a PAT-authenticated endpoint which returns only active games for a user.
+
+### 1.0.3
+
+Changed icon to a rook from padlock at the request of users.
 
 -----------------------------------------------------------------------------------------------------------
